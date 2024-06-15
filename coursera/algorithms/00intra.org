@@ -62,8 +62,10 @@
 1. the text book and websize: https://algs4.cs.princeton.edu
 2. the java study resource: http://introcs.cs.princeton.edu
 
-[fn:1] wgikipedia: https://en.wikipedia.org/wiki/Algorithms_%2B_Data_Structures_%3D_Programs douban link: https://accounts.douban.com/passport/login?source=book
+[fn:1] wgikipedia: https://en.wikipedia.org/wiki/Algorithms_%2B_Data_Structures_%3D_Programs
+
 [fn:2] see: https://dl.acm.org/doi/abs/10.5555/615603.615756
+
 * exercise
 
 ** knuth's algorithm (reservior sampling)
