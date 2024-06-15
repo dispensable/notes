@@ -1,0 +1,127 @@
+* topics
+
+** What is this course?
+
+   ・Intermediate-level survey course.
+   ・Programming and problem solving, with applications.
+   ・Algorithm: method for solving a problem.
+   ・Data structure: method to store information.
+
+| topic      | data structures and algorithms                     |
+|------------+----------------------------------------------------|
+| data types | stack, queue, bag, union-find, priority queue      |
+| sorting    | quicksort, mergesort, heapsort                     |
+| searching  | BST, red-black BST, hash table                     |
+| graphs     | BFS, DFS, Prim, Kruskal, Dijkstra                  |
+| strings    | radix sorts, tries, KMP, regexps, data compression |
+| advanced   | B-tree, suffix array, maxflow                      |
+
+** why
+
+1. their impact is broad and far
+2. old roots new opportunities
+3. intellectual stimulation[fn:: 智力刺激]
+   #+begin_quote
+    For me, great algorithms are the poetry of computation. Just like
+    verse, they can be terse, allusive, dense, and even mysterious.
+    But once unlocked, they cast a brilliant new light on some
+    aspect of computing[fn:2]
+    — Francis Sullivan
+   #+end_quote
+
+   #+begin_quote
+   An algorithm must be seen to be believed.
+   — Donald Knuth
+   #+end_quote
+4. To become a proficient programmer
+   #+begin_quote
+   I will, in fact, claim that the difference between a bad programmer
+   and a good one is whether he considers his code or his data structures
+   more important. Bad programmers worry about the code. Good
+   programmers worry about data structures and their relationships.
+   — Linus Torvalds
+   #+end_quote
+
+   #+begin_quote
+   Algorithms + Data Structures = Programs[fn:1]
+   — Niklaus Wirth
+   #+end_quote
+5. They may unlock the secrets of life and of the universe
+   20^th: the century science - formula based
+   21^th: century science - algorithm based
+
+  #+begin_quote
+  Algorithms: a common language for nature, human, and computer
+  — Avi Wigderson
+  #+end_quote
+
+6. for fun and profit
+
+** resource
+
+1. the text book and websize: https://algs4.cs.princeton.edu
+2. the java study resource: http://introcs.cs.princeton.edu
+
+[fn:1] wgikipedia: https://en.wikipedia.org/wiki/Algorithms_%2B_Data_Structures_%3D_Programs douban link: https://accounts.douban.com/passport/login?source=book
+[fn:2] see: https://dl.acm.org/doi/abs/10.5555/615603.615756
+* exercise
+
+** knuth's algorithm (reservior sampling)
+
+蓄水池抽样
+
+- 方法：
+
+从n中选k个：
+
+1. 首先保留前k个；
+2. 然后当第i个元素出现时（i > k）; 从0 ~ i-1生成一个随机数j (或者直接生成0-1的随机数并和k/i比较)
+3. 如果j < k, 则蓄水池中的第j个元素需要替换成现在的元素
+4. 直到结束
+
+- 正确性：
+
+#+begin_quote
+这个算法之所以正确，主要基于以下几点：
+
+    等概率性：每个元素被选中的概率都是相等的。对于前K个元素，它们一开始就被放入蓄水池，因此它们的初始概率为1。对于第i个元素（i > K），它能留在蓄水池中的概率是K/i，因为它首先需要被选中（概率为K/i），然后在后续的每一步中不被替换（概率为(i-1)/i * (i-2)/(i-1) * ... * (K+1)/(K+2)）。最终，这些概率相乘等于K/N，其中N是数据流的总长度。
+
+    简单高效：蓄水池抽样在时间上是线性的，即O(n)，空间上是常数级别的O(K)。这使得它非常适合处理大规模数据流。
+
+    动态性：蓄水池抽样不需要提前知道数据的总量，这使得它在处理数据流时特别有用。
+
+通过以上算法和其性质，可以确保在任何时刻，蓄水池中的每个元素都是从已处理的数据中等概率抽取的，这就是蓄水池抽样正确性的根本原因。
+#+end_quote
+
+- 示例：
+
+从stdin中随机抽取一行显示：
+
+#+begin_src java
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
+
+public class RandomWord {
+    public static void main(String[] args) {
+        int count = 0;
+        String choosen = null;
+
+        while (!StdIn.isEmpty()) {
+            count++;
+            String word = StdIn.readString();
+            if (choosen == null) {
+                choosen = word;
+            } else {
+                double p = 1.0 / count;
+                boolean isChosen = StdRandom.bernoulli(p);
+
+                if (isChosen) {
+                    choosen = word;
+                }
+            }
+        }
+        StdOut.println(choosen);
+    }
+}
+#+end_src
